@@ -46,6 +46,7 @@ export const profile = {
       company: "2ND Venture LLC",
       role: "Software Developer",
       duration: "Feb 2020 - Feb 2024",
+      url: "https://www.2ndventurellc.com/",
       highlights: [
         "Developed scalable React applications using TypeScript.",
         "Implemented Redux Toolkit for structured state management.",
