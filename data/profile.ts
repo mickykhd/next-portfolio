@@ -72,7 +72,7 @@ export const profile = {
       name: "Country Code Application",
       description: "Country lookup and dialing code search application.",
       tech: ["React", "API Integration"],
-      liveUrl: "https://country-b73b0.web.app/",
+      liveUrl: "https://rest-countries-kbbq.vercel.app/",
     },
     {
       name: "Notes Application",
