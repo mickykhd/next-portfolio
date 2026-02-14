@@ -179,7 +179,6 @@ export default function Home() {
           <div className="education-grid">
             {education.map((entry) => (
               <article key={entry.institution}>
-                <p className="eyebrow">{entry.duration}</p>
                 <h3>{entry.institution}</h3>
                 <p>{entry.degree}</p>
                 <p className="badge">CGPA: {entry.cgpa}</p>

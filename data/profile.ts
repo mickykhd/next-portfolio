@@ -84,13 +84,11 @@ export const profile = {
     {
       institution: "Sophitorium Engineering College",
       degree: "B.Tech in Electrical Engineering",
-      duration: "2015 - 2018",
       cgpa: "7.9",
     },
     {
       institution: "Gandhi Institute of Technology and Management, Bhubaneswar",
       degree: "MBA (Marketing & HR)",
-      duration: "2019 - 2021",
       cgpa: "7.6",
     },
   ],
