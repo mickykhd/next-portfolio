@@ -1,0 +1,33 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Ashrumochan Badajena Portfolio</title>
+  <desc id="desc">Hero preview for Ashrumochan Badajena frontend engineer portfolio</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#05122b" />
+      <stop offset="50%" stop-color="#0c1f46" />
+      <stop offset="100%" stop-color="#132f63" />
+    </linearGradient>
+    <radialGradient id="glow" cx="20%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#79ffe1" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#79ffe1" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glow2" cx="80%" cy="70%" r="55%">
+      <stop offset="0%" stop-color="#ff6b99" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ff6b99" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <rect width="1200" height="630" fill="url(#glow2)" />
+  <g fill="none" stroke="#79ffe1" stroke-opacity="0.25">
+    <circle cx="200" cy="500" r="160" />
+    <circle cx="950" cy="180" r="120" />
+    <circle cx="600" cy="320" r="220" />
+  </g>
+  <text x="80" y="210" fill="#79ffe1" font-family="'Space Grotesk', 'JetBrains Mono', 'Segoe UI', sans-serif" font-size="24" letter-spacing="0.4em">REACT · TYPESCRIPT · REDUX</text>
+  <text x="80" y="295" fill="#f5f7ff" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="72" font-weight="600">Ashrumochan Badajena</text>
+  <text x="80" y="360" fill="#b7c2f0" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="36">MERN Stack Developer · Frontend Engineer</text>
+  <text x="80" y="430" fill="#f5f7ff" font-family="'JetBrains Mono', 'Space Grotesk', monospace" font-size="24">Scalable React architectures · High-performance UI systems</text>
+  <rect x="80" y="470" width="420" height="70" rx="35" fill="#79ffe1" fill-opacity="0.12" stroke="#79ffe1" stroke-opacity="0.4" />
+  <text x="110" y="515" fill="#79ffe1" font-family="'JetBrains Mono', monospace" font-size="24">ashrumochan7@gmail.com</text>
+</svg>
