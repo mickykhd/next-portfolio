@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Sora, Syne } from "next/font/google";
 import { profile, siteConfig } from "@/data/profile";
+import { AnimatedBackground } from "@/app/components/AnimatedBackground";
 import "./globals.css";
 
 const syne = Syne({
@@ -108,7 +109,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${syne.variable} ${sora.variable} ${jetBrains.variable} antialiased`}>
         <div className="stellar-bg" aria-hidden="true">
-          <div className="stellar-gradient" />
+          <AnimatedBackground />
           <div className="stellar-orb orb-one" />
           <div className="stellar-orb orb-two" />
         </div>

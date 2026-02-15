@@ -32,6 +32,7 @@ html {
 }
 
 body {
+  position: relative;
   min-height: 100vh;
   background-color: var(--bg-0);
   color: var(--text-base);
@@ -39,10 +40,7 @@ body {
   line-height: 1.7;
   font-family: var(--font-body), "Sora", system-ui;
   -webkit-font-smoothing: antialiased;
-  background-image: radial-gradient(circle at 15% 15%, rgba(91, 198, 255, 0.18) 0%, transparent 42%),
-    radial-gradient(circle at 85% 10%, rgba(255, 156, 245, 0.28) 0%, transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(121, 255, 225, 0.16) 0%, transparent 40%),
-    linear-gradient(140deg, var(--bg-0), var(--bg-1));
+  background-image: none;
 }
 
 h1,
@@ -64,8 +62,17 @@ p {
 .stellar-bg {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
+  pointer-events: none;
+}
+
+.stellar-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .stellar-gradient {
@@ -75,8 +82,13 @@ p {
     radial-gradient(circle at 70% 30%, rgba(91, 198, 255, 0.4), transparent 45%),
     radial-gradient(circle at 80% 80%, rgba(121, 255, 225, 0.35), transparent 55%),
     linear-gradient(135deg, rgba(5, 8, 35, 0.9), rgba(5, 9, 25, 0.95));
+  background-size: 260% 260%;
   filter: blur(0px);
-  animation: gradientShift 18s ease-in-out infinite alternate;
+  animation: gradientShift 5s ease-in-out infinite alternate,
+    gradientPan 8s ease-in-out infinite alternate,
+    gradientGlow 4.5s ease-in-out infinite alternate,
+    gradientHue 12s linear infinite;
+  will-change: transform, background-position;
 }
 
 .stellar-orb {
@@ -124,10 +136,58 @@ p {
 
 @keyframes gradientShift {
   from {
-    transform: scale(1);
+    transform: scale(1.08) translate3d(0, 0, 0) rotate(-2deg) translateZ(0);
   }
   to {
-    transform: scale(1.08) translate3d(-30px, -20px, 0);
+    transform: scale(1.4) translate3d(-320px, -240px, 0) rotate(8deg) translateZ(0);
+  }
+}
+
+@keyframes gradientPan {
+  0% {
+    background-position: 0% 0%, 40% 40%, 75% 70%, 0% 0%;
+  }
+  50% {
+    background-position: 24% 36%, 62% 28%, 64% 92%, 34% 18%;
+  }
+  100% {
+    background-position: -26% 30%, 22% 78%, 98% 56%, -34% 24%;
+  }
+}
+
+@keyframes gradientGlow {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes gradientHue {
+  0% {
+    filter: hue-rotate(0deg) saturate(115%);
+  }
+  50% {
+    filter: hue-rotate(25deg) saturate(130%);
+  }
+  100% {
+    filter: hue-rotate(45deg) saturate(115%);
+  }
+}
+
+@keyframes panelGlow {
+  0% {
+    background-position: 0% 0%, 30% 40%, 70% 60%;
+  }
+  50% {
+    background-position: 30% 20%, 60% 20%, 40% 80%;
+  }
+  100% {
+    background-position: -20% 30%, 20% 70%, 80% 40%;
   }
 }
 
@@ -178,7 +238,10 @@ p {
   border-radius: 1.5rem;
   border: 1px solid rgba(121, 255, 225, 0.25);
   background: linear-gradient(155deg, rgba(8, 15, 52, 0.95), rgba(27, 14, 60, 0.9)),
-    linear-gradient(45deg, rgba(121, 255, 225, 0.15), transparent 55%);
+    linear-gradient(45deg, rgba(121, 255, 225, 0.25), transparent 55%),
+    linear-gradient(135deg, rgba(91, 198, 255, 0.25), transparent 55%);
+  background-size: 220% 220%;
+  animation: panelGlow 10s ease-in-out infinite alternate;
   backdrop-filter: blur(24px);
   box-shadow: 0 25px 60px rgba(5, 7, 30, 0.65);
   max-height: calc(100vh - 4rem);
