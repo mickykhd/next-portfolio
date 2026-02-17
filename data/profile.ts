@@ -78,7 +78,7 @@ export const profile = {
       name: "Notes Application",
       description: "Full-stack MERN notes management platform.",
       tech: ["MongoDB", "Express", "React", "Node.js"],
-      liveUrl: "https://notes-app-u468.onrender.com/",
+      liveUrl: "https://notes-app-lemon-rho.vercel.app/",
     },
   ],
   education: [
