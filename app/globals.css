@@ -249,7 +249,6 @@ p {
   scrollbar-width: thin;
   scrollbar-color: rgba(121, 255, 225, 0.6) transparent;
   overscroll-behavior: contain;
-  border-image: linear-gradient(135deg, rgba(91, 198, 255, 0.35), rgba(255, 156, 245, 0.35)) 1;
 }
 
 .intro-panel::-webkit-scrollbar {

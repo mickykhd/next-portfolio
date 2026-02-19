@@ -31,7 +31,7 @@ export const profile = {
   },
   experience: [
     {
-      company: "Soffront CRM, Kolkata, India",
+      company: "Soffront Software Pvt Ltd., Kolkata, India",
       role: "Frontend Developer",
       duration: "May 2024 - Present",
       highlights: [
