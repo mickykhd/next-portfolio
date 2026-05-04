@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 interface ProjectScreenshotProps {
   url: string;
@@ -15,11 +15,21 @@ const gradients = [
 ];
 
 export function ProjectScreenshot({ url, name }: ProjectScreenshotProps) {
+  const imgRef = useRef<HTMLImageElement>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgFailed, setImgFailed] = useState(false);
   const gradientIndex = name.length % gradients.length;
 
   const screenshotUrl = `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=600&h=340`;
+
+  const setImgRef = useCallback((node: HTMLImageElement | null) => {
+    if (node) {
+      imgRef.current = node;
+      if (node.complete && node.naturalWidth > 0) {
+        setImgLoaded(true);
+      }
+    }
+  }, []);
 
   return (
     <div className="project-preview-area">
@@ -29,6 +39,7 @@ export function ProjectScreenshot({ url, name }: ProjectScreenshotProps) {
       />
       {!imgFailed && (
         <img
+          ref={setImgRef}
           src={screenshotUrl}
           alt={`${name} preview`}
           className={`project-screenshot ${imgLoaded ? "loaded" : ""}`}
