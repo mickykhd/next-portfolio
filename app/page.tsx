@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { profile } from "@/data/profile";
+import { AnimatedHero } from "@/app/components/AnimatedHero";
 
 export default function Home() {
   const {
@@ -10,223 +10,193 @@ export default function Home() {
     projects,
     education,
     certifications,
-    languages,
     profiles,
   } = profile;
 
-  const heroHighlights = [
-    { label: "Location", value: personal.location },
-    { label: "Focus", value: personal.roles.slice(0, 2).join(" • ") },
-    {
-      label: "Languages",
-      value: languages.map((lang) => lang.language).join(", "),
-    },
-  ];
-
-  const contactLinks = [
-    {
-      label: "Email",
-      href: `mailto:${personal.email}`,
-      display: personal.email,
-      description: "Direct collaboration inquiries",
-    },
-    {
-      label: "LinkedIn",
-      href: profiles.linkedin.url,
-      display: "LinkedIn profile",
-      description: "Professional network & endorsements",
-    },
-    {
-      label: "GitHub",
-      href: profiles.github.url,
-      display: profiles.github.username,
-      description: "Code samples & OSS spikes",
-    },
+  const navLinks = [
+    { label: "About", href: "#about", index: "01." },
+    { label: "Skills", href: "#skills", index: "02." },
+    { label: "Projects", href: "#projects", index: "03." },
+    { label: "Experience", href: "#experience", index: "04." },
+    { label: "Education", href: "#education", index: "05." },
+    { label: "Contact", href: "#contact", index: "06." },
   ];
 
   return (
-    <main className="portfolio-shell" aria-label="Ashrumochan Badajena portfolio">
-      <section className="intro-panel" aria-labelledby="intro-heading">
-        <p className="eyebrow">{personal.roles.join(" · ")}</p>
-        <h1 id="intro-heading">{personal.name}</h1>
-        <p className="lede">{about}</p>
-
-        <div className="hero-actions">
-          <Link className="btn primary" href={`mailto:${personal.email}`}>
-            Let&apos;s build together
-          </Link>
-          <Link className="btn ghost" href={profiles.linkedin.url} target="_blank">
-            View LinkedIn
-          </Link>
+    <div className="portfolio-container">
+      <nav className="nav" aria-label="Main navigation">
+        <div className="nav-inner">
+          <a href="#" className="nav-logo">AB</a>
+          <ol className="nav-links">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} data-index={link.index}>{link.label}</a>
+              </li>
+            ))}
+          </ol>
+          <a
+            href={`mailto:${personal.email}`}
+            className="nav-resume"
+          >
+            Get In Touch
+          </a>
         </div>
+      </nav>
 
-        <dl className="hero-highlights">
-          {heroHighlights.map((item) => (
-            <div key={item.label}>
-              <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
-            </div>
-          ))}
-        </dl>
+      <div className="main-content">
+        <AnimatedHero
+          name={`${personal.name}.`}
+          tagline="I build things for the web."
+          highlightWord="web"
+          description={about}
+          ctaButtons={
+            <>
+              <a href={`mailto:${personal.email}`} className="btn-primary">
+                Get In Touch
+              </a>
+              <a href={profiles.github.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                GitHub
+              </a>
+              <a href={profiles.linkedin.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                LinkedIn
+              </a>
+            </>
+          }
+        />
 
-        <nav aria-label="Quick section navigation" className="quick-links">
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#experience">Experience</a>
-          <a href="#education">Education</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </section>
-
-      <div className="content-stack">
-        <section id="skills" aria-labelledby="skills-heading" className="panel">
-          <div className="section-heading">
-            <p className="eyebrow">Expertise</p>
-            <h2 id="skills-heading">Frontend-led engineering</h2>
-            <p>
-              Modern MERN-stack delivery with an emphasis on scalable React
-              architectures, robust routing, and type-safe APIs.
-            </p>
+        <section className="section" id="skills">
+          <div className="section-header">
+            <span className="section-number">02.</span>
+            <h2 className="section-title">Skills & Expertise</h2>
+            <div className="section-line" />
           </div>
           <div className="skills-grid">
             {Object.entries(skills).map(([category, stack]) => (
-              <article key={category}>
-                <h3>{category}</h3>
-                <ul>
+              <div className="skill-card" key={category}>
+                <div className="skill-card-title">{category}</div>
+                <ul className="skills-list">
                   {stack.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li className="skill-tag" key={item}>{item}</li>
                   ))}
                 </ul>
-              </article>
+              </div>
             ))}
           </div>
         </section>
 
-        <section id="projects" aria-labelledby="projects-heading" className="panel">
-          <div className="section-heading">
-            <p className="eyebrow">Selected projects</p>
-            <h2 id="projects-heading">Ship-ready builds</h2>
-            <p>
-              Product experiences crafted with real users in mind—each shipped
-              with performance budgets and clean component abstractions.
-            </p>
+        <section className="section" id="projects">
+          <div className="section-header">
+            <span className="section-number">03.</span>
+            <h2 className="section-title">Projects</h2>
+            <div className="section-line" />
           </div>
           <div className="projects-grid">
             {projects.map((project) => (
-              <article className="project-card" key={project.name}>
-                <div>
-                  <h3>{project.name}</h3>
-                  <p>{project.description}</p>
+              <div className="project-card" key={project.name}>
+                <div className="project-card-header">
+                  <svg className="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  <div className="project-links">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.name}`}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </a>
+                  </div>
                 </div>
-                <ul className="tech-list" aria-label="Tech stack">
+                <h3>{project.name}</h3>
+                <p>{project.description}</p>
+                <div className="project-tech">
                   {project.tech.map((tech) => (
-                    <li key={tech}>{tech}</li>
+                    <span key={tech}>{tech}</span>
                   ))}
-                </ul>
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn text"
-                >
-                  Visit live project
-                </a>
-              </article>
+                </div>
+              </div>
             ))}
           </div>
         </section>
 
-        <section id="experience" aria-labelledby="experience-heading" className="panel">
-          <div className="section-heading">
-            <p className="eyebrow">Experience</p>
-            <h2 id="experience-heading">Impact snapshots</h2>
-            <p>
-              Leading frontend initiatives from discovery through delivery while
-              partnering closely with design, backend, and product stakeholders.
-            </p>
+        <section className="section" id="experience">
+          <div className="section-header">
+            <span className="section-number">04.</span>
+            <h2 className="section-title">Experience</h2>
+            <div className="section-line" />
           </div>
-          <div className="timeline">
+          <div className="experience-list">
             {experience.map((job) => (
-              <article key={job.company} className="timeline-entry">
-                <header>
-                  <div>
-                    <p className="eyebrow">{job.duration}</p>
-                    <h3>{job.role}</h3>
-                  </div>
+              <div className="experience-item" key={job.company}>
+                <div className="experience-duration">{job.duration}</div>
+                <h3 className="experience-role">{job.role}</h3>
+                <div className="experience-company">
                   {job.url ? (
-                    <a href={job.url} target="_blank" rel="noopener noreferrer">
-                      {job.company}
-                    </a>
+                    <a href={job.url} target="_blank" rel="noopener noreferrer">{job.company}</a>
                   ) : (
-                    <span>{job.company}</span>
+                    job.company
                   )}
-                </header>
-                <ul>
+                </div>
+                <ul className="experience-highlights">
                   {job.highlights.map((highlight) => (
                     <li key={highlight}>{highlight}</li>
                   ))}
                 </ul>
-              </article>
+              </div>
             ))}
           </div>
         </section>
 
-        <section id="education" aria-labelledby="education-heading" className="panel">
-          <div className="section-heading">
-            <p className="eyebrow">Foundation</p>
-            <h2 id="education-heading">Education & certifications</h2>
+        <section className="section" id="education">
+          <div className="section-header">
+            <span className="section-number">05.</span>
+            <h2 className="section-title">Education & Certifications</h2>
+            <div className="section-line" />
           </div>
           <div className="education-grid">
             {education.map((entry) => (
-              <article key={entry.institution}>
+              <div className="education-card" key={entry.institution}>
                 <h3>{entry.institution}</h3>
                 <p>{entry.degree}</p>
-                <p className="badge">CGPA: {entry.cgpa}</p>
-              </article>
+                <span className="cgpa-badge">CGPA: {entry.cgpa}</span>
+              </div>
             ))}
           </div>
-          <div className="certifications">
-            <h3>Certifications</h3>
-            <ul>
-              {certifications.map((cert) => (
-                <li key={cert}>{cert}</li>
-              ))}
-            </ul>
+          <div className="cert-list">
+            {certifications.map((cert) => (
+              <div className="cert-item" key={cert}>{cert}</div>
+            ))}
           </div>
         </section>
 
-        <section id="contact" aria-labelledby="contact-heading" className="panel contact-panel">
-          <div className="section-heading">
-            <p className="eyebrow">Let&apos;s collaborate</p>
-            <h2 id="contact-heading">Available for frontend-focused roles</h2>
+        <section className="section contact-section" id="contact">
+          <div className="contact-card">
+            <span className="section-number" style={{ fontSize: "0.8rem" }}>06.</span>
+            <h2>Let&apos;s Work Together</h2>
             <p>
-              I partner with teams who care about developer experience, design
-              systems, and measurable UX improvements.
+              I&apos;m currently open to frontend-focused roles and collaboration opportunities.
+              Whether you have a question or just want to say hi, my inbox is always open.
             </p>
+            <a href={`mailto:${personal.email}`} className="btn-primary">
+              Say Hello
+            </a>
           </div>
           <div className="contact-links">
-            {contactLinks.map((link) => (
-              <article key={link.label}>
-                <h3>{link.label}</h3>
-                <p>{link.description}</p>
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.display}
-                </a>
-              </article>
-            ))}
-            <article>
-              <h3>Languages</h3>
-              <ul className="chip-list">
-                {languages.map((lang) => (
-                  <li key={lang.language}>
-                    {lang.language} · {lang.fluency}
-                  </li>
-                ))}
-              </ul>
-            </article>
+            <a href={profiles.github.url} target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href={profiles.linkedin.url} target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href={`mailto:${personal.email}`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Email
+            </a>
           </div>
         </section>
       </div>
-    </main>
+
+      <footer className="footer">
+        Designed & Built by {personal.name}
+      </footer>
+    </div>
   );
 }

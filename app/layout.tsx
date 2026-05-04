@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Sora, Syne } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { profile, siteConfig } from "@/data/profile";
-import { AnimatedBackground } from "@/app/components/AnimatedBackground";
 import "./globals.css";
 
-const syne = Syne({
-  weight: ["500", "600", "700"],
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
 });
 
-const sora = Sora({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
 });
@@ -107,11 +105,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${sora.variable} ${jetBrains.variable} antialiased`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrains.variable} antialiased`}>
         <div className="stellar-bg" aria-hidden="true">
-          <AnimatedBackground />
-          <div className="stellar-orb orb-one" />
-          <div className="stellar-orb orb-two" />
+          <div className="mesh-gradient" />
+          <div className="orb orb-1" />
+          <div className="orb orb-2" />
         </div>
         {children}
         <script
