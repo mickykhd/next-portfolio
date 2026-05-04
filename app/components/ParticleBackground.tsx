@@ -55,7 +55,7 @@ export function ParticleBackground() {
       const particles: Particle[] = [];
       for (let i = 0; i < PARTICLE_COUNT; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = 0.15 + Math.random() * 0.45;
+        const speed = 0.05 + Math.random() * 0.2;
         particles.push({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
@@ -158,11 +158,11 @@ export function ParticleBackground() {
           p.vy += (dyToMouse / distToMouse) * force;
         }
 
-        p.vx += (Math.random() - 0.5) * 0.02;
-        p.vy += (Math.random() - 0.5) * 0.02;
+        p.vx += (Math.random() - 0.5) * 0.005;
+        p.vy += (Math.random() - 0.5) * 0.005;
 
         const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        const maxSpeed = 0.8;
+        const maxSpeed = 0.35;
         if (speed > maxSpeed) {
           p.vx = (p.vx / speed) * maxSpeed;
           p.vy = (p.vy / speed) * maxSpeed;
