@@ -33,8 +33,9 @@ export function ParticleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const PARTICLE_COUNT = 100;
-    const CONNECTION_DISTANCE = 160;
+    const isMobile = window.innerWidth < 768;
+    const PARTICLE_COUNT = isMobile ? 50 : 100;
+    const CONNECTION_DISTANCE = isMobile ? 120 : 160;
     const MOUSE_RADIUS = 220;
     const MOUSE_FORCE = 0.018;
 
@@ -45,7 +46,7 @@ export function ParticleBackground() {
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     const initParticles = () => {
@@ -70,6 +71,18 @@ export function ParticleBackground() {
     const onMouseMove = (e: MouseEvent) => {
       mouseRef.current.targetX = e.clientX;
       mouseRef.current.targetY = e.clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mouseRef.current.targetX = e.touches[0].clientX;
+        mouseRef.current.targetY = e.touches[0].clientY;
+      }
+    };
+
+    const onTouchEnd = () => {
+      mouseRef.current.targetX = -1000;
+      mouseRef.current.targetY = -1000;
     };
 
     const onMouseLeave = () => {
@@ -231,6 +244,8 @@ export function ParticleBackground() {
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
     animFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
@@ -238,6 +253,8 @@ export function ParticleBackground() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
 
