@@ -10,10 +10,10 @@ export const profile = {
     location: "Khordha, Odisha, India",
     roles: ["Software Developer", "React JS Developer", "Frontend Engineer"],
     tagline:
-      "MERN Stack Developer specializing in scalable React architectures and modern frontend systems.",
+      "Full Stack Developer specializing in scalable React architectures and modern web systems.",
   },
   about:
-    "I am a MERN Stack developer focused on building scalable, performant, and user-centric web applications. With strong expertise in React, TypeScript, Redux Toolkit, and modern routing patterns, I design maintainable frontend architectures that integrate seamlessly with Node.js backends. I am passionate about clean code, UI performance, and continuous learning.",
+    "I am a Full Stack developer focused on building scalable, performant, and user-centric web applications. With strong expertise in React, TypeScript, Redux Toolkit, and Node.js, I build end-to-end solutions spanning modern frontend architectures and robust backend systems with Express.js, MongoDB, and MySQL. Passionate about clean code, UI performance, and continuous learning.",
   skills: {
     frontend: [
       "ReactJS",
