@@ -10,7 +10,6 @@ interface Particle {
   radius: number;
   opacity: number;
   pulseDirection: number;
-  hue: number;
 }
 
 interface Trail {
@@ -26,6 +25,7 @@ export function ParticleBackground() {
   const particlesRef = useRef<Particle[]>([]);
   const trailsRef = useRef<Trail[]>([]);
   const animFrameRef = useRef<number>(0);
+  const lastTouchRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,10 +34,12 @@ export function ParticleBackground() {
     if (!ctx) return;
 
     const isMobile = window.innerWidth < 768;
-    const PARTICLE_COUNT = isMobile ? 50 : 100;
-    const CONNECTION_DISTANCE = isMobile ? 120 : 160;
-    const MOUSE_RADIUS = 220;
-    const MOUSE_FORCE = 0.018;
+    const PARTICLE_COUNT = isMobile ? 40 : 100;
+    const CONNECTION_DISTANCE = isMobile ? 100 : 160;
+    const MOUSE_RADIUS = isMobile ? 180 : 220;
+    const MOUSE_FORCE = isMobile ? 0.025 : 0.018;
+    const USE_SHADOWS = !isMobile;
+    const USE_TRAILS = !isMobile;
 
     const resize = () => {
       if (!canvas) return;
@@ -62,7 +64,6 @@ export function ParticleBackground() {
           radius: 0.6 + Math.random() * 1.8,
           opacity: 0.2 + Math.random() * 0.5,
           pulseDirection: Math.random() > 0.5 ? 1 : -1,
-          hue: 160 + Math.random() * 30,
         });
       }
       particlesRef.current = particles;
@@ -74,6 +75,9 @@ export function ParticleBackground() {
     };
 
     const onTouchMove = (e: TouchEvent) => {
+      const now = performance.now();
+      if (now - lastTouchRef.current < 32) return;
+      lastTouchRef.current = now;
       if (e.touches.length > 0) {
         mouseRef.current.targetX = e.touches[0].clientX;
         mouseRef.current.targetY = e.touches[0].clientY;
@@ -96,49 +100,42 @@ export function ParticleBackground() {
       const h = window.innerHeight;
 
       const mouse = mouseRef.current;
-      mouse.x += (mouse.targetX - mouse.x) * 0.08;
-      mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      mouse.x += (mouse.targetX - mouse.x) * 0.1;
+      mouse.y += (mouse.targetY - mouse.y) * 0.1;
 
       ctx.clearRect(0, 0, w, h);
 
       const mouseActive = mouse.x > 0 && mouse.y > 0;
-      if (mouseActive) {
-        trailsRef.current.push({
-          x: mouse.x,
-          y: mouse.y,
-          alpha: 0.08,
-          radius: 20,
-        });
-      }
 
-      const trails = trailsRef.current;
-      for (let i = trails.length - 1; i >= 0; i--) {
-        const t = trails[i];
-        t.alpha *= 0.88;
-        t.radius *= 0.93;
-        if (t.alpha < 0.001) {
-          trails.splice(i, 1);
-          continue;
-        }
-        ctx.beginPath();
-        const grad = ctx.createRadialGradient(t.x, t.y, 0, t.x, t.y, t.radius);
-        grad.addColorStop(0, `rgba(100, 255, 218, ${t.alpha * 0.25})`);
-        grad.addColorStop(0.5, `rgba(100, 255, 218, ${t.alpha * 0.08})`);
-        grad.addColorStop(1, "rgba(100, 255, 218, 0)");
-        ctx.fillStyle = grad;
-        ctx.arc(t.x, t.y, t.radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      if (USE_TRAILS && mouseActive) {
+        trailsRef.current.push({ x: mouse.x, y: mouse.y, alpha: 0.08, radius: 20 });
 
-      if (mouseActive && trails.length > 0) {
-        for (let i = 1; i < trails.length; i++) {
+        const trails = trailsRef.current;
+        for (let i = trails.length - 1; i >= 0; i--) {
+          const t = trails[i];
+          t.alpha *= 0.88;
+          t.radius *= 0.93;
+          if (t.alpha < 0.001) { trails.splice(i, 1); continue; }
+          const grad = ctx.createRadialGradient(t.x, t.y, 0, t.x, t.y, t.radius);
+          grad.addColorStop(0, `rgba(100, 255, 218, ${t.alpha * 0.25})`);
+          grad.addColorStop(0.5, `rgba(100, 255, 218, ${t.alpha * 0.08})`);
+          grad.addColorStop(1, "rgba(100, 255, 218, 0)");
+          ctx.fillStyle = grad;
           ctx.beginPath();
-          ctx.moveTo(trails[i - 1].x, trails[i - 1].y);
-          ctx.lineTo(trails[i].x, trails[i].y);
-          ctx.strokeStyle = `rgba(100, 255, 218, ${Math.min(trails[i].alpha, trails[i - 1].alpha) * 0.3})`;
-          ctx.lineWidth = 1;
-          ctx.lineCap = "round";
-          ctx.stroke();
+          ctx.arc(t.x, t.y, t.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        if (trails.length > 1) {
+          for (let i = 1; i < trails.length; i++) {
+            ctx.beginPath();
+            ctx.moveTo(trails[i - 1].x, trails[i - 1].y);
+            ctx.lineTo(trails[i].x, trails[i].y);
+            ctx.strokeStyle = `rgba(100, 255, 218, ${Math.min(trails[i].alpha, trails[i - 1].alpha) * 0.3})`;
+            ctx.lineWidth = 1;
+            ctx.lineCap = "round";
+            ctx.stroke();
+          }
         }
       }
 
@@ -147,7 +144,7 @@ export function ParticleBackground() {
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        p.opacity += p.pulseDirection * 0.0025;
+        p.opacity += p.pulseDirection * (isMobile ? 0.004 : 0.0025);
         if (p.opacity >= 0.65) p.pulseDirection = -1;
         if (p.opacity <= 0.2) p.pulseDirection = 1;
 
@@ -175,66 +172,57 @@ export function ParticleBackground() {
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        const isNearMouse = mouseActive &&
-          Math.hypot(mouse.x - p.x, mouse.y - p.y) < MOUSE_RADIUS;
+        const isNearMouse = mouseActive && Math.hypot(mouse.x - p.x, mouse.y - p.y) < MOUSE_RADIUS;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
 
         if (isNearMouse) {
-          ctx.shadowColor = "rgba(100, 255, 218, 0.7)";
-          ctx.shadowBlur = 12;
+          if (USE_SHADOWS) { ctx.shadowColor = "rgba(100, 255, 218, 0.7)"; ctx.shadowBlur = 12; }
           ctx.fillStyle = `rgba(100, 255, 218, ${p.opacity * 1.5})`;
         } else {
-          ctx.shadowColor = "transparent";
-          ctx.shadowBlur = 0;
-          ctx.fillStyle = `hsla(${p.hue}, 60%, 70%, ${p.opacity})`;
+          ctx.fillStyle = `hsla(160, 60%, 70%, ${p.opacity})`;
         }
 
         ctx.globalAlpha = p.opacity;
         ctx.fill();
+        ctx.shadowBlur = 0;
       }
-      ctx.shadowBlur = 0;
 
-      const drawnPairs = new Set<string>();
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distance = dx * dx + dy * dy;
 
-          if (distance < CONNECTION_DISTANCE) {
-            const pairKey = `${Math.min(i, j)}-${Math.max(i, j)}`;
-            if (drawnPairs.has(pairKey)) continue;
-            drawnPairs.add(pairKey);
-
-            const opacity = (1 - distance / CONNECTION_DISTANCE) * 0.22;
+          if (distance < CONNECTION_DISTANCE * CONNECTION_DISTANCE) {
+            const dist = Math.sqrt(distance);
+            const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.22;
             const midX = (particles[i].x + particles[j].x) / 2;
             const midY = (particles[i].y + particles[j].y) / 2;
-            const nearMouse = mouseActive &&
-              Math.hypot(mouse.x - midX, mouse.y - midY) < MOUSE_RADIUS * 1.3;
+            const nearMouse = mouseActive && Math.hypot(mouse.x - midX, mouse.y - midY) < MOUSE_RADIUS * 1.3;
 
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
 
-            if (nearMouse) {
+            if (nearMouse && USE_SHADOWS) {
               ctx.strokeStyle = `rgba(100, 255, 218, ${opacity * 2.5})`;
               ctx.lineWidth = 1.2;
               ctx.shadowColor = "rgba(100, 255, 218, 0.4)";
               ctx.shadowBlur = 8;
             } else {
-              ctx.strokeStyle = `rgba(136, 146, 176, ${opacity})`;
-              ctx.lineWidth = 0.5;
-              ctx.shadowColor = "transparent";
-              ctx.shadowBlur = 0;
+              const alpha = nearMouse ? opacity * 2.5 : opacity;
+              const col = nearMouse ? "100, 255, 218" : "136, 146, 176";
+              ctx.strokeStyle = `rgba(${col}, ${alpha})`;
+              ctx.lineWidth = nearMouse ? 1.2 : 0.5;
             }
             ctx.globalAlpha = 1;
             ctx.stroke();
+            ctx.shadowBlur = 0;
           }
         }
       }
-      ctx.shadowBlur = 0;
 
       animFrameRef.current = requestAnimationFrame(animate);
     };
