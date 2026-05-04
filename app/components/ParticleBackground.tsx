@@ -158,8 +158,15 @@ export function ParticleBackground() {
           p.vy += (dyToMouse / distToMouse) * force;
         }
 
-        p.vx *= 0.997;
-        p.vy *= 0.997;
+        p.vx += (Math.random() - 0.5) * 0.02;
+        p.vy += (Math.random() - 0.5) * 0.02;
+
+        const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        const maxSpeed = 0.8;
+        if (speed > maxSpeed) {
+          p.vx = (p.vx / speed) * maxSpeed;
+          p.vy = (p.vy / speed) * maxSpeed;
+        }
 
         p.x += p.vx;
         p.y += p.vy;
