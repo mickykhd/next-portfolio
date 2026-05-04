@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { profile, siteConfig } from "@/data/profile";
+import { ParticleBackground } from "@/app/components/ParticleBackground";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -106,11 +107,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrains.variable} antialiased`}>
-        <div className="stellar-bg" aria-hidden="true">
-          <div className="mesh-gradient" />
-          <div className="orb orb-1" />
-          <div className="orb orb-2" />
-        </div>
+        <div className="stellar-bg" aria-hidden="true" />
+        <ParticleBackground />
         {children}
         <script
           type="application/ld+json"
