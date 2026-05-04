@@ -3,6 +3,7 @@ import { AnimatedHero } from "@/app/components/AnimatedHero";
 import { Navbar } from "@/app/components/Navbar";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { TiltCard } from "@/app/components/TiltCard";
+import { Footer } from "@/app/components/Footer";
 
 export default function Home() {
   const {
@@ -190,9 +191,7 @@ export default function Home() {
         </ScrollReveal>
       </div>
 
-      <footer className="footer">
-        Designed & Built by {personal.name}
-      </footer>
+      <Footer name={personal.name} />
     </div>
   );
 }
