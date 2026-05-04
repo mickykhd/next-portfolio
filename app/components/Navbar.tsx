@@ -10,12 +10,12 @@ interface NavLink {
 
 interface NavbarProps {
   links: NavLink[];
-  email: string;
 }
 
-export function Navbar({ links, email }: NavbarProps) {
+export function Navbar({ links }: NavbarProps) {
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -47,24 +47,54 @@ export function Navbar({ links, email }: NavbarProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <nav
-      className={`nav ${visible ? "nav-visible" : "nav-hidden"} ${scrolled ? "nav-scrolled" : ""}`}
-      aria-label="Main navigation"
-    >
-      <div className="nav-inner">
-        <a href="#" className="nav-logo">AB</a>
-        <ol className="nav-links">
+    <>
+      <nav
+        className={`nav ${visible ? "nav-visible" : "nav-hidden"} ${scrolled ? "nav-scrolled" : ""}`}
+        aria-label="Main navigation"
+      >
+        <div className="nav-inner">
+          <a href="#" className="nav-logo">AB</a>
+          <ol className="nav-links nav-desktop">
+            {links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} data-index={link.index}>{link.label}</a>
+              </li>
+            ))}
+          </ol>
+          <a href="#contact" className="nav-resume nav-desktop">
+            Get In Touch
+          </a>
+          <button
+            className="hamburger"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <span className={`hamburger-line ${menuOpen ? "open" : ""}`} />
+          </button>
+        </div>
+      </nav>
+
+      <div className={`mobile-drawer ${menuOpen ? "open" : ""}`}>
+        <ol className="mobile-nav-links">
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href} data-index={link.index}>{link.label}</a>
+              <a href={link.href} data-index={link.index} onClick={closeMenu}>{link.label}</a>
             </li>
           ))}
         </ol>
-        <a href={`mailto:${email}`} className="nav-resume">
+        <a href="#contact" className="btn-primary" onClick={closeMenu}>
           Get In Touch
         </a>
       </div>
-    </nav>
+    </>
   );
 }
