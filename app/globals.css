@@ -2,7 +2,6 @@
 
 :root,
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
@@ -141,7 +140,7 @@ p { color: var(--text-muted); }
   .type-cursor { animation: none; opacity: 1; }
   .nav { transition: none !important; }
   .nav-hidden { transform: none !important; }
-  html { scroll-behavior: auto; }
+  html { scroll-padding-top: 5rem; }
   .hero-eyebrow, .hero-tagline, .hero-description, .hero-cta {
     opacity: 1 !important;
     transform: none !important;

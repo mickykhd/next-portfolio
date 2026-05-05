@@ -18,6 +18,13 @@ export function Navbar({ links }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
 
@@ -51,6 +58,21 @@ export function Navbar({ links }: NavbarProps) {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest("a[href^=\"#\"]");
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (!href || href === "#") return;
+      e.preventDefault();
+      const id = href.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
