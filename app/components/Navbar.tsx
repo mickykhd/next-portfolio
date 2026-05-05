@@ -68,10 +68,29 @@ export function Navbar({ links }: NavbarProps) {
       e.preventDefault();
       const id = href.replace("#", "");
       const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.pushState(null, "", href);
+      }
     };
     document.addEventListener("click", handler);
     return () => document.removeEventListener("click", handler);
+  }, []);
+
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            history.replaceState(null, "", `#${entry.target.id}`);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
