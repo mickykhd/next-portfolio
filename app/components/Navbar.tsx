@@ -21,6 +21,15 @@ export function Navbar({ links }: NavbarProps) {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
+    const hash = window.location.hash;
+    if (hash) {
+      const id = hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ block: "start" });
+        return;
+      }
+    }
     window.scrollTo(0, 0);
   }, []);
 
