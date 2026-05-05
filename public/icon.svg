@@ -1,22 +1,20 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Ashrumochan personal icon</title>
-  <desc id="desc">Stylized monogram featuring the letters A and B inside a glowing capsule</desc>
+  <title id="title">Ashrumochan Badajena icon</title>
+  <desc id="desc">AB monogram icon</desc>
   <defs>
-    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(128 96) rotate(45) scale(400)">
-      <stop offset="0%" stop-color="#ff9cf5" stop-opacity="0.85" />
-      <stop offset="45%" stop-color="#5bc6ff" stop-opacity="0.8" />
-      <stop offset="100%" stop-color="#030014" />
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#112240" />
+      <stop offset="100%" stop-color="#0a0a0f" />
     </radialGradient>
-    <linearGradient id="stroke" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#79ffe1" />
-      <stop offset="1" stop-color="#5bc6ff" />
+    <linearGradient id="stroke" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#64ffda" />
+      <stop offset="1" stop-color="#64ffda" stop-opacity="0.4" />
     </linearGradient>
-    <linearGradient id="text" x1="150" y1="180" x2="360" y2="360" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#79ffe1" />
-      <stop offset="1" stop-color="#ff9cf5" />
+    <linearGradient id="text" x1="130" y1="160" x2="380" y2="370" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#64ffda" />
+      <stop offset="1" stop-color="#38bdf8" />
     </linearGradient>
   </defs>
-  <rect x="24" y="24" width="464" height="464" rx="128" fill="url(#bg)" stroke="url(#stroke)" stroke-width="8" />
-  <path d="M175 352L236 168L276 168L337 352H298.5L282 302H225L208.5 352H175ZM239 272H268L253.5 222L239 272Z" fill="url(#text)" />
-  <path d="M321 168C363.087 168 397 201.913 397 244C397 273.917 380.42 300.013 355.5 312.783L378 352H338L313.5 310.5H293V352H258V168H321ZM300 203V276H320.5C337.897 276 352 261.897 352 244C352 226.103 337.897 212 320.5 212H300Z" fill="#f4f6ff" opacity="0.85" />
+  <rect x="20" y="20" width="472" height="472" rx="96" fill="url(#bg)" stroke="url(#stroke)" stroke-width="6" />
+  <text x="256" y="305" text-anchor="middle" fill="url(#text)" font-family="'Inter', 'Space Grotesk', system-ui, sans-serif" font-size="210" font-weight="700" letter-spacing="-8">AB</text>
 </svg>
