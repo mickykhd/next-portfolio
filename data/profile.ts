@@ -80,6 +80,13 @@ export const profile = {
       tech: ["MongoDB", "Express", "React", "Node.js"],
       liveUrl: "https://notes-app-lemon-rho.vercel.app/",
     },
+    {
+      name: "Payment Gateway UI",
+      description:
+        "Production-quality payment flow with mock gateway, live card preview, transaction history, and Zustand state management.",
+      tech: ["Next.js", "TypeScript", "Zustand"],
+      liveUrl: "https://fe-payment-mock.vercel.app/",
+    },
   ],
   education: [
     {
