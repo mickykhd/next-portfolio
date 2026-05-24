@@ -17,6 +17,7 @@ export const profile = {
   skills: {
     frontend: [
       "ReactJS",
+      "Next JS"
       "TypeScript",
       "JavaScript",
       "Redux Toolkit",
