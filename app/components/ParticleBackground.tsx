@@ -30,24 +30,30 @@ export function ParticleBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.innerWidth < 768;
-    const PARTICLE_COUNT = isMobile ? 40 : 100;
-    const CONNECTION_DISTANCE = isMobile ? 100 : 160;
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2 : 2);
+
+    const PARTICLE_COUNT = isMobile ? 30 : 60;
+    const CONNECTION_DISTANCE = isMobile ? 100 : 150;
     const MOUSE_RADIUS = isMobile ? 180 : 220;
     const MOUSE_FORCE = isMobile ? 0.025 : 0.018;
-    const USE_SHADOWS = !isMobile;
-    const USE_TRAILS = !isMobile;
+    const USE_TRAILS = !isMobile && !prefersReducedMotion;
+
+    let w = window.innerWidth;
+    let h = window.innerHeight;
 
     const resize = () => {
       if (!canvas) return;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
@@ -57,12 +63,13 @@ export function ParticleBackground() {
         const angle = Math.random() * Math.PI * 2;
         const speed = 0.05 + Math.random() * 0.2;
         particles.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
+          x: Math.random() * w,
+          y: Math.random() * h,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           radius: 0.6 + Math.random() * 1.8,
-          opacity: 0.2 + Math.random() * 0.5,
+          opacity: 0.2 + Math.random() *
+0.5,
           pulseDirection: Math.random() > 0.5 ? 1 : -1,
         });
       }
@@ -94,10 +101,11 @@ export function ParticleBackground() {
       mouseRef.current.targetY = -1000;
     };
 
+    const connDistSq = CONNECTION_DISTANCE * CONNECTION_DISTANCE;
+    const mouseRadSq = MOUSE_RADIUS * MOUSE_RADIUS;
+
     const animate = () => {
       if (!ctx || !canvas) return;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
 
       const mouse = mouseRef.current;
       mouse.x += (mouse.targetX - mouse.x) * 0.1;
@@ -106,41 +114,29 @@ export function ParticleBackground() {
       ctx.clearRect(0, 0, w, h);
 
       const mouseActive = mouse.x > 0 && mouse.y > 0;
+      const mx = mouse.x;
+      const my = mouse.y;
 
       if (USE_TRAILS && mouseActive) {
-        trailsRef.current.push({ x: mouse.x, y: mouse.y, alpha: 0.08, radius: 20 });
-
         const trails = trailsRef.current;
+        trails.push({ x: mx, y: my, alpha: 0.08, radius: 20 });
         for (let i = trails.length - 1; i >= 0; i--) {
           const t = trails[i];
           t.alpha *= 0.88;
           t.radius *= 0.93;
           if (t.alpha < 0.001) { trails.splice(i, 1); continue; }
-          const grad = ctx.createRadialGradient(t.x, t.y, 0, t.x, t.y, t.radius);
-          grad.addColorStop(0, `rgba(100, 255, 218, ${t.alpha * 0.25})`);
-          grad.addColorStop(0.5, `rgba(100, 255, 218, ${t.alpha * 0.08})`);
-          grad.addColorStop(1, "rgba(100, 255, 218, 0)");
-          ctx.fillStyle = grad;
+          ctx.globalAlpha = t.alpha * 0.25;
+          ctx.fillStyle = "rgba(100, 255, 218, 1)";
           ctx.beginPath();
           ctx.arc(t.x, t.y, t.radius, 0, Math.PI * 2);
           ctx.fill();
         }
-
-        if (trails.length > 1) {
-          for (let i = 1; i < trails.length; i++) {
-            ctx.beginPath();
-            ctx.moveTo(trails[i - 1].x, trails[i - 1].y);
-            ctx.lineTo(trails[i].x, trails[i].y);
-            ctx.strokeStyle = `rgba(100, 255, 218, ${Math.min(trails[i].alpha, trails[i - 1].alpha) * 0.3})`;
-            ctx.lineWidth = 1;
-            ctx.lineCap = "round";
-            ctx.stroke();
-          }
-        }
+        ctx.globalAlpha = 1;
       }
 
       const particles = particlesRef.current;
 
+      // Update particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
@@ -148,14 +144,16 @@ export function ParticleBackground() {
         if (p.opacity >= 0.65) p.pulseDirection = -1;
         if (p.opacity <= 0.2) p.pulseDirection = 1;
 
-        const dxToMouse = mouse.x - p.x;
-        const dyToMouse = mouse.y - p.y;
-        const distToMouse = Math.sqrt(dxToMouse * dxToMouse + dyToMouse * dyToMouse);
-
-        if (distToMouse < MOUSE_RADIUS && distToMouse > 0 && mouseActive) {
-          const force = (1 - distToMouse / MOUSE_RADIUS) * MOUSE_FORCE;
-          p.vx += (dxToMouse / distToMouse) * force;
-          p.vy += (dyToMouse / distToMouse) * force;
+        if (mouseActive) {
+          const dx = mx - p.x;
+          const dy = my - p.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < mouseRadSq && distSq > 0) {
+            const dist = Math.sqrt(distSq);
+            const force = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE;
+            p.vx += (dx / dist) * force;
+            p.vy += (dy / dist) * force;
+          }
         }
 
         p.vx += (Math.random() - 0.5) * 0.005;
@@ -177,67 +175,75 @@ export function ParticleBackground() {
         if (p.y > h + 10) p.y = -10;
       }
 
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        const isNearMouse = mouseActive && Math.hypot(mouse.x - p.x, mouse.y - p.y) < MOUSE_RADIUS;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-
-        if (isNearMouse) {
-          if (USE_SHADOWS) { ctx.shadowColor = "rgba(100, 255, 218, 0.7)"; ctx.shadowBlur = 12; }
-          ctx.fillStyle = `rgba(100, 255, 218, ${p.opacity * 1.5})`;
-        } else {
-          ctx.fillStyle = `hsla(160, 60%, 70%, ${p.opacity})`;
-        }
-
-        ctx.globalAlpha = p.opacity;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-
+      // Draw connections (use squared distance first then sqrt only for valid pairs)
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const distance = dx * dx + dy * dy;
+          const distanceSq = dx * dx + dy * dy;
 
-          if (distance < CONNECTION_DISTANCE * CONNECTION_DISTANCE) {
-            const dist = Math.sqrt(distance);
+          if (distanceSq < connDistSq) {
+            const dist = Math.sqrt(distanceSq);
             const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.22;
-            const midX = (particles[i].x + particles[j].x) / 2;
-            const midY = (particles[i].y + particles[j].y) / 2;
-            const nearMouse = mouseActive && Math.hypot(mouse.x - midX, mouse.y - midY) < MOUSE_RADIUS * 1.3;
+            const midX = (particles[i].x + particles[j].x) * 0.5;
+            const midY = (particles[i].y + particles[j].y) * 0.5;
+            const nearMouse = mouseActive && (mx - midX) * (mx - midX) + (my - midY) * (my - midY) < mouseRadSq * 1.69;
 
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
 
-            if (nearMouse && USE_SHADOWS) {
+            if (nearMouse) {
               ctx.strokeStyle = `rgba(100, 255, 218, ${opacity * 2.5})`;
               ctx.lineWidth = 1.2;
-              ctx.shadowColor = "rgba(100, 255, 218, 0.4)";
-              ctx.shadowBlur = 8;
             } else {
-              const alpha = nearMouse ? opacity * 2.5 : opacity;
-              const col = nearMouse ? "100, 255, 218" : "136, 146, 176";
-              ctx.strokeStyle = `rgba(${col}, ${alpha})`;
-              ctx.lineWidth = nearMouse ? 1.2 : 0.5;
+              ctx.strokeStyle = `rgba(136, 146, 176, ${opacity})`;
+              ctx.lineWidth = 0.5;
             }
             ctx.globalAlpha = 1;
             ctx.stroke();
-            ctx.shadowBlur = 0;
           }
         }
       }
 
+      // Draw particles (batch by glow vs non-glow)
+      // Non-glow
+      ctx.fillStyle = "hsla(160, 60%, 70%, 1)";
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const isNearMouse = mouseActive && (mx - p.x) * (mx - p.x) + (my - p.y) * (my - p.y) < mouseRadSq;
+        if (isNearMouse) continue;
+        ctx.globalAlpha = p.opacity;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Glow near-mouse
+      if (mouseActive && !isMobile) {
+        ctx.fillStyle = "rgba(100, 255, 218, 1)";
+        ctx.shadowColor = "rgba(100, 255, 218, 0.7)";
+        ctx.shadowBlur = 12;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          const isNearMouse = (mx - p.x) * (mx - p.x) + (my - p.y) * (my - p.y) < mouseRadSq;
+          if (!isNearMouse) continue;
+          ctx.globalAlpha = Math.min(1, p.opacity * 1.5);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+      }
+
+      ctx.globalAlpha = 1;
       animFrameRef.current = requestAnimationFrame(animate);
     };
 
     resize();
     initParticles();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("mouseleave", onMouseLeave);
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("touchend", onTouchEnd);
