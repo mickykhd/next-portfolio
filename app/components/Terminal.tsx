@@ -24,7 +24,7 @@ const NEOFETCH_ART = [
 const NEOFETCH_INFO = [
   "visitor@portfolio",
   "-----------------",
-  "OS: Fedora Linux x86_64",
+  "OS: Ubuntu Linux x86_64",
   "Host: next-portfolio",
   "Kernel: 6.x-generic",
   "Shell: zsh 5.9",
