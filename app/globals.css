@@ -486,6 +486,34 @@ p { color: var(--text-muted); }
   justify-content: center;
   min-height: 100vh;
   padding-top: 5rem;
+  position: relative;
+}
+
+.ascii-wall {
+  position: absolute;
+  top: 4.5rem;
+  right: clamp(0.5rem, 4vw, 3rem);
+  font-family: var(--font-mono);
+  font-size: clamp(4px, 0.75vw, 11px);
+  line-height: 1.25;
+  white-space: pre;
+  color: rgba(51, 255, 102, 0.07);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  transform: skewX(-8deg);
+}
+
+.ascii-wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, transparent 70%, var(--bg-0) 100%);
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-eyebrow {
@@ -515,6 +543,51 @@ p { color: var(--text-muted); }
   color: var(--text-bright);
   min-height: 1.2em;
   text-shadow: 0 0 18px rgba(51, 255, 102, 0.35);
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.hero-name.glitching::before,
+.hero-name.glitching::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+}
+
+.hero-name.glitching::before {
+  color: #00ffe1;
+  z-index: -1;
+  animation: glitchShift1 0.22s steps(3) both;
+}
+
+.hero-name.glitching::after {
+  color: #ff0055;
+  z-index: -2;
+  animation: glitchShift2 0.22s steps(3) both;
+}
+
+@keyframes glitchShift1 {
+  0% { transform: translate(0); clip-path: inset(0 0 82% 0); }
+  33% { transform: translate(-4px, 2px); clip-path: inset(30% 0 46% 0); }
+  66% { transform: translate(3px, -2px); clip-path: inset(62% 0 12% 0); }
+  100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes glitchShift2 {
+  0% { transform: translate(0); clip-path: inset(70% 0 8% 0); }
+  33% { transform: translate(4px, -2px); clip-path: inset(12% 0 72% 0); }
+  66% { transform: translate(-3px, 3px); clip-path: inset(48% 0 30% 0); }
+  100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-name.glitching::before,
+  .hero-name.glitching::after {
+    display: none;
+  }
 }
 
 .type-cursor {
@@ -575,6 +648,61 @@ p { color: var(--text-muted); }
 .hero-cta.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ---------- skill marquee ---------- */
+
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 0;
+  position: relative;
+  background: rgba(5, 8, 7, 0.6);
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 2.5rem;
+  animation: marqueeScroll 36s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.marquee-item:hover {
+  color: var(--green);
+  text-shadow: 0 0 12px rgba(51, 255, 102, 0.5);
+}
+
+.marquee-sep {
+  color: var(--green-dim);
+  opacity: 0.5;
+  font-size: 0.6rem;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
 }
 
 .btn-primary {

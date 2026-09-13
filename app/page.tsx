@@ -47,6 +47,23 @@ export default function Home() {
           tagline="Full Stack dev. Linux ♥ AI-native shipper."
           highlightWord="AI-native"
           description={about}
+          marqueeItems={[
+            "React",
+            "Next.js",
+            "TypeScript",
+            "Node.js",
+            "Linux",
+            "Neovim",
+            "tmux",
+            "Claude Code",
+            "Codex",
+            "OpenCode",
+            "MCP",
+            "Docker",
+            "Git",
+            "Fedora",
+            "Ubuntu",
+          ]}
           ctaButtons={
             <>
               <Magnetic>
