@@ -69,11 +69,14 @@ export function AnimatedHero({
       <p
         className={`hero-eyebrow ${eyebrowVisible ? "visible" : ""}`}
       >
-        Hi, my name is
+        whoami
       </p>
-      <h1 className="hero-name">
-        {nameDisplay}
-        {cursorVisible && <span className="type-cursor" />}
+      <h1 className="hero-name" aria-label={name}>
+        <span aria-hidden="true">
+          {nameDisplay}
+          {cursorVisible && <span className="type-cursor" />}
+        </span>
+        <noscript>{name}</noscript>
       </h1>
       <p className={`hero-tagline ${taglineVisible ? "visible" : ""}`}>
         {taglineParts[0]}

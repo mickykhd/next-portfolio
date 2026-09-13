@@ -123,6 +123,14 @@ export function Navbar({ links }: NavbarProps) {
             Get In Touch
           </a>
           <button
+            className="nav-palette-btn nav-desktop"
+            onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            aria-label="Open command palette"
+            title="Command palette (Ctrl/⌘ + K)"
+          >
+            ⌘K
+          </button>
+          <button
             className="hamburger"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"

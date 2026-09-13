@@ -6,6 +6,10 @@ import { TiltCard } from "@/app/components/TiltCard";
 import { ContactForm } from "@/app/components/ContactForm";
 import { ProjectScreenshot } from "@/app/components/ProjectScreenshot";
 import { Footer } from "@/app/components/Footer";
+import { Terminal } from "@/app/components/Terminal";
+import { CommandPalette } from "@/app/components/CommandPalette";
+import { CopyEmail } from "@/app/components/CopyEmail";
+import { JsonResume } from "@/app/components/JsonResume";
 
 export default function Home() {
   const {
@@ -21,23 +25,24 @@ export default function Home() {
   } = profile;
 
   const navLinks = [
-    { label: "About", href: "#about", index: "01." },
-    { label: "Skills", href: "#skills", index: "02." },
-    { label: "AI Stack", href: "#ai-workflow", index: "03." },
-    { label: "Projects", href: "#projects", index: "04." },
-    { label: "Experience", href: "#experience", index: "05." },
-    { label: "Education", href: "#education", index: "06." },
-    { label: "Contact", href: "#contact", index: "07." },
+    { label: "about", href: "#about", index: "01" },
+    { label: "skills", href: "#skills", index: "02" },
+    { label: "playground", href: "#playground", index: "03" },
+    { label: "ai_stack", href: "#ai-workflow", index: "04" },
+    { label: "projects", href: "#projects", index: "05" },
+    { label: "experience", href: "#experience", index: "06" },
+    { label: "contact", href: "#contact", index: "07" },
   ];
 
   return (
     <div className="portfolio-container">
       <Navbar links={navLinks} />
+      <CommandPalette />
 
       <div className="main-content">
         <AnimatedHero
           name={`${personal.name}.`}
-          tagline="Crafting performant React apps with AI-native workflows."
+          tagline="Full Stack dev. Linux ♥ AI-native shipper."
           highlightWord="AI-native"
           description={about}
           ctaButtons={
@@ -58,10 +63,26 @@ export default function Home() {
         />
 
         <ScrollReveal>
+          <section className="section playground-section" id="playground">
+            <div className="section-header">
+              <span className="section-number">03</span>
+              <h2 className="section-title">./playground --interactive</h2>
+              <div className="section-line" />
+            </div>
+            <p className="ai-workflow-intro">
+              Don&apos;t just read about me — interrogate me. It&apos;s a real
+              little shell: try <code>neofetch</code>, <code>whoami</code>, or{" "}
+              <code>sudo make hire-me</code>.
+            </p>
+            <Terminal />
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
           <section className="section" id="skills">
             <div className="section-header">
-              <span className="section-number">02.</span>
-              <h2 className="section-title">Skills & Expertise</h2>
+              <span className="section-number">02</span>
+              <h2 className="section-title">cat skills.txt</h2>
               <div className="section-line" />
             </div>
             <div className="skills-grid">
@@ -71,12 +92,12 @@ export default function Home() {
                     {
                       (
                         {
-                          frontend: "Frontend",
-                          backend: "Backend",
-                          aiTools: "AI Dev Tools",
-                          tools: "Tools & DevOps",
+                          frontend: "ls frontend/",
+                          backend: "ls backend/",
+                          aiTools: "ls ai-tools/",
+                          tools: "ls devops/",
                         } as Record<string, string>
-                      )[category] ?? category
+                      )[category] ?? `ls ${category}/`
                     }
                   </div>
                   <ul className="skills-list">
@@ -93,8 +114,8 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="ai-workflow">
             <div className="section-header">
-              <span className="section-number">03.</span>
-              <h2 className="section-title">AI Workflow & Stack</h2>
+              <span className="section-number">04</span>
+              <h2 className="section-title">cat ai_stack.md</h2>
               <div className="section-line" />
             </div>
             <p className="ai-workflow-intro">
@@ -115,8 +136,8 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="projects">
             <div className="section-header">
-              <span className="section-number">04.</span>
-              <h2 className="section-title">Projects</h2>
+              <span className="section-number">05</span>
+              <h2 className="section-title">git log --projects</h2>
               <div className="section-line" />
             </div>
             <div className="projects-grid">
@@ -156,8 +177,8 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="experience">
             <div className="section-header">
-              <span className="section-number">05.</span>
-              <h2 className="section-title">Experience</h2>
+              <span className="section-number">06</span>
+              <h2 className="section-title">git log --career</h2>
               <div className="section-line" />
             </div>
             <div className="experience-list">
@@ -186,8 +207,8 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="education">
             <div className="section-header">
-              <span className="section-number">06.</span>
-              <h2 className="section-title">Education & Certifications</h2>
+              <span className="section-number">07</span>
+              <h2 className="section-title">cat education.log</h2>
               <div className="section-line" />
             </div>
             <div className="education-grid">
@@ -210,8 +231,8 @@ export default function Home() {
         <ScrollReveal>
           <section className="section contact-section" id="contact">
             <div className="section-header" style={{ justifyContent: "center" }}>
-              <span className="section-number">07.</span>
-              <h2 className="section-title">Get In Touch</h2>
+              <span className="section-number">08</span>
+              <h2 className="section-title">ping --me</h2>
               <div className="section-line" />
             </div>
             <div className="contact-layout">
@@ -233,6 +254,10 @@ export default function Home() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                     Email
                   </a>
+                </div>
+                <div className="nerd-actions">
+                  <CopyEmail email={personal.email} />
+                  <JsonResume />
                 </div>
               </div>
               <ContactForm />

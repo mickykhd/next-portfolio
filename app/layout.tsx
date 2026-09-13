@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { profile, siteConfig } from "@/data/profile";
 import { ParticleBackground } from "@/app/components/ParticleBackground";
+import { BootSequence } from "@/app/components/BootSequence";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -109,6 +110,9 @@ export default function RootLayout({
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrains.variable} antialiased`}>
         <div className="stellar-bg" aria-hidden="true" />
         <ParticleBackground />
+        <div className="crt-overlay" aria-hidden="true" />
+        <div className="crt-vignette" aria-hidden="true" />
+        <BootSequence />
         {children}
         <script
           type="application/ld+json"
