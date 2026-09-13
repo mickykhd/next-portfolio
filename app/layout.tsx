@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { profile, siteConfig } from "@/data/profile";
 import { ParticleBackground } from "@/app/components/ParticleBackground";
 import { BootSequence } from "@/app/components/BootSequence";
+import { CursorGlow } from "@/app/components/CursorGlow";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -113,6 +114,7 @@ export default function RootLayout({
         <div className="crt-overlay" aria-hidden="true" />
         <div className="crt-vignette" aria-hidden="true" />
         <BootSequence />
+        <CursorGlow />
         {children}
         <script
           type="application/ld+json"

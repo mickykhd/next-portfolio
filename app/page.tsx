@@ -10,6 +10,8 @@ import { Terminal } from "@/app/components/Terminal";
 import { CommandPalette } from "@/app/components/CommandPalette";
 import { CopyEmail } from "@/app/components/CopyEmail";
 import { JsonResume } from "@/app/components/JsonResume";
+import { Magnetic } from "@/app/components/Magnetic";
+import { ScrambleText } from "@/app/components/ScrambleText";
 
 export default function Home() {
   const {
@@ -47,17 +49,23 @@ export default function Home() {
           description={about}
           ctaButtons={
             <>
-              <a href="#contact" className="btn-primary">
-                Get In Touch
-              </a>
-              <a href={profiles.github.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                GitHub
-              </a>
-              <a href={profiles.linkedin.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                LinkedIn
-              </a>
+              <Magnetic>
+                <a href="#contact" className="btn-primary">
+                  Get In Touch
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={profiles.github.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                  GitHub
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={profiles.linkedin.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                  LinkedIn
+                </a>
+              </Magnetic>
             </>
           }
         />
@@ -66,7 +74,7 @@ export default function Home() {
           <section className="section playground-section" id="playground">
             <div className="section-header">
               <span className="section-number">03</span>
-              <h2 className="section-title">./playground --interactive</h2>
+              <h2 className="section-title"><ScrambleText text="./playground --interactive" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <p className="ai-workflow-intro">
@@ -82,7 +90,7 @@ export default function Home() {
           <section className="section" id="skills">
             <div className="section-header">
               <span className="section-number">02</span>
-              <h2 className="section-title">cat skills.txt</h2>
+              <h2 className="section-title"><ScrambleText text="cat skills.txt" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <div className="skills-grid">
@@ -115,7 +123,7 @@ export default function Home() {
           <section className="section" id="ai-workflow">
             <div className="section-header">
               <span className="section-number">04</span>
-              <h2 className="section-title">cat ai_stack.md</h2>
+              <h2 className="section-title"><ScrambleText text="cat ai_stack.md" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <p className="ai-workflow-intro">
@@ -137,7 +145,7 @@ export default function Home() {
           <section className="section" id="projects">
             <div className="section-header">
               <span className="section-number">05</span>
-              <h2 className="section-title">git log --projects</h2>
+              <h2 className="section-title"><ScrambleText text="git log --projects" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <div className="projects-grid">
@@ -178,7 +186,7 @@ export default function Home() {
           <section className="section" id="experience">
             <div className="section-header">
               <span className="section-number">06</span>
-              <h2 className="section-title">git log --career</h2>
+              <h2 className="section-title"><ScrambleText text="git log --career" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <div className="experience-list">
@@ -208,7 +216,7 @@ export default function Home() {
           <section className="section" id="education">
             <div className="section-header">
               <span className="section-number">07</span>
-              <h2 className="section-title">cat education.log</h2>
+              <h2 className="section-title"><ScrambleText text="cat education.log" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <div className="education-grid">
@@ -232,7 +240,7 @@ export default function Home() {
           <section className="section contact-section" id="contact">
             <div className="section-header" style={{ justifyContent: "center" }}>
               <span className="section-number">08</span>
-              <h2 className="section-title">ping --me</h2>
+              <h2 className="section-title"><ScrambleText text="ping --me" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
             <div className="contact-layout">

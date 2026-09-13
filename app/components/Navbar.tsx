@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ScrambleText } from "@/app/components/ScrambleText";
 
 interface NavLink {
   label: string;
@@ -115,7 +116,9 @@ export function Navbar({ links }: NavbarProps) {
           <ol className="nav-links nav-desktop">
             {links.map((link) => (
               <li key={link.href}>
-                <a href={link.href} data-index={link.index}>{link.label}</a>
+                <a href={link.href} data-index={link.index}>
+                  <ScrambleText text={link.label} />
+                </a>
               </li>
             ))}
           </ol>
