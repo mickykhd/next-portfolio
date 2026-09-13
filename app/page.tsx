@@ -12,6 +12,7 @@ export default function Home() {
     personal,
     about,
     skills,
+    aiWorkflow,
     experience,
     projects,
     education,
@@ -22,10 +23,11 @@ export default function Home() {
   const navLinks = [
     { label: "About", href: "#about", index: "01." },
     { label: "Skills", href: "#skills", index: "02." },
-    { label: "Projects", href: "#projects", index: "03." },
-    { label: "Experience", href: "#experience", index: "04." },
-    { label: "Education", href: "#education", index: "05." },
-    { label: "Contact", href: "#contact", index: "06." },
+    { label: "AI Stack", href: "#ai-workflow", index: "03." },
+    { label: "Projects", href: "#projects", index: "04." },
+    { label: "Experience", href: "#experience", index: "05." },
+    { label: "Education", href: "#education", index: "06." },
+    { label: "Contact", href: "#contact", index: "07." },
   ];
 
   return (
@@ -35,8 +37,8 @@ export default function Home() {
       <div className="main-content">
         <AnimatedHero
           name={`${personal.name}.`}
-          tagline="Crafting performant, scalable React experiences."
-          highlightWord="performant"
+          tagline="Crafting performant React apps with AI-native workflows."
+          highlightWord="AI-native"
           description={about}
           ctaButtons={
             <>
@@ -65,7 +67,18 @@ export default function Home() {
             <div className="skills-grid">
               {Object.entries(skills).map(([category, stack]) => (
                 <div className="skill-card" key={category}>
-                  <div className="skill-card-title">{category}</div>
+                  <div className="skill-card-title">
+                    {
+                      (
+                        {
+                          frontend: "Frontend",
+                          backend: "Backend",
+                          aiTools: "AI Dev Tools",
+                          tools: "Tools & DevOps",
+                        } as Record<string, string>
+                      )[category] ?? category
+                    }
+                  </div>
                   <ul className="skills-list">
                     {stack.map((item) => (
                       <li className="skill-tag" key={item}>{item}</li>
@@ -78,9 +91,31 @@ export default function Home() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section className="section" id="projects">
+          <section className="section" id="ai-workflow">
             <div className="section-header">
               <span className="section-number">03.</span>
+              <h2 className="section-title">AI Workflow & Stack</h2>
+              <div className="section-line" />
+            </div>
+            <p className="ai-workflow-intro">
+              I build AI-natively — agents for scaffolding and refactors, MCP for
+              grounded context, and strict human review before every merge.
+            </p>
+            <div className="skills-grid">
+              {aiWorkflow.map((tool) => (
+                <div className="skill-card" key={tool.name}>
+                  <div className="skill-card-title">{tool.name}</div>
+                  <p className="ai-tool-detail">{tool.detail}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section className="section" id="projects">
+            <div className="section-header">
+              <span className="section-number">04.</span>
               <h2 className="section-title">Projects</h2>
               <div className="section-line" />
             </div>
@@ -121,7 +156,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="experience">
             <div className="section-header">
-              <span className="section-number">04.</span>
+              <span className="section-number">05.</span>
               <h2 className="section-title">Experience</h2>
               <div className="section-line" />
             </div>
@@ -151,7 +186,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="education">
             <div className="section-header">
-              <span className="section-number">05.</span>
+              <span className="section-number">06.</span>
               <h2 className="section-title">Education & Certifications</h2>
               <div className="section-line" />
             </div>
@@ -175,7 +210,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section contact-section" id="contact">
             <div className="section-header" style={{ justifyContent: "center" }}>
-              <span className="section-number">06.</span>
+              <span className="section-number">07.</span>
               <h2 className="section-title">Get In Touch</h2>
               <div className="section-line" />
             </div>

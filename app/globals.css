@@ -583,6 +583,17 @@ p { color: var(--text-muted); }
   border-color: var(--accent-border);
 }
 
+.ai-workflow-intro {
+  max-width: 640px;
+  margin-bottom: 1.75rem;
+  line-height: 1.7;
+}
+
+.ai-tool-detail {
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
