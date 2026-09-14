@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -9,8 +9,7 @@ interface TiltCardProps {
 
 export function TiltCard({ children, className = "" }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState("");
-  const [glare, setGlare] = useState("");
+  const glareRef = useRef<HTMLDivElement>(null);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = ref.current;
@@ -25,18 +24,22 @@ export function TiltCard({ children, className = "" }: TiltCardProps) {
     const rotateX = ((y - centerY) / centerY) * -8;
     const rotateY = ((x - centerX) / centerX) * 8;
 
-    setTransform(`perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
 
-    const glareX = (x / rect.width) * 100;
-    const glareY = (y / rect.height) * 100;
-    setGlare(
-      `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(100, 255, 218, 0.12) 0%, transparent 60%)`
-    );
+    if (glareRef.current) {
+      const glareX = (x / rect.width) * 100;
+      const glareY = (y / rect.height) * 100;
+      glareRef.current.style.background =
+        `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(51, 255, 102, 0.12) 0%, transparent 60%)`;
+    }
   };
 
   const onMouseLeave = () => {
-    setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-    setGlare("");
+    const card = ref.current;
+    if (!card) return;
+    card.style.transform =
+      "perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    if (glareRef.current) glareRef.current.style.background = "";
   };
 
   return (
@@ -45,9 +48,9 @@ export function TiltCard({ children, className = "" }: TiltCardProps) {
       className={`tilt-card ${className}`}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{ transform, transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}
+      style={{ transform: "perspective(800px)", transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}
     >
-      <div className="tilt-glare" style={{ background: glare }} />
+      <div ref={glareRef} className="tilt-glare" />
       {children}
     </div>
   );

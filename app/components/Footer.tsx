@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const TUX_SVG = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -27,16 +27,18 @@ const UBUNTU_SVG = (
 
 export function Footer({ name }: { name: string }) {
   const year = new Date().getFullYear();
-  const [uptime, setUptime] = useState("--:--:--");
+  const uptimeRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const start = Date.now();
     const tick = () => {
+      const el = uptimeRef.current;
+      if (!el) return;
       const s = Math.floor((Date.now() - start) / 1000);
       const hh = String(Math.floor(s / 3600)).padStart(2, "0");
       const mm = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
       const ss = String(s % 60).padStart(2, "0");
-      setUptime(`${hh}:${mm}:${ss}`);
+      el.textContent = `session ${hh}:${mm}:${ss}`;
     };
     tick();
     const id = setInterval(tick, 1000);
@@ -63,7 +65,7 @@ export function Footer({ name }: { name: string }) {
         <span className="status-sep">•</span>
         <span>next.js</span>
         <span className="status-sep">•</span>
-        <span>session {uptime}</span>
+        <span ref={uptimeRef}>session --:--:--</span>
       </div>
       <div className="footer-credit">
         &copy; {year} Designed &amp; Built by {name}{" "}

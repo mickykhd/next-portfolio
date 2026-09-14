@@ -7,7 +7,6 @@ interface Drop {
   y: number;
   speed: number;
   chars: string[];
-  charCount: number;
   age: number;
 }
 
@@ -45,7 +44,6 @@ export function ParticleBackground() {
         y: startY,
         speed: (2 + Math.random() * 4) * (isMobile ? 0.6 : 1),
         chars: Array.from({ length: charCount }, randChar),
-        charCount,
         age: 0,
       };
     };

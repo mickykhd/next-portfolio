@@ -17,17 +17,17 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0a192f, #112240)",
-          borderRadius: "12px",
-          color: "#64ffda",
+          background: "linear-gradient(135deg, #050807, #0d1410)",
+          borderRadius: "0px",
+          color: "#33ff66",
           fontSize: 30,
           fontWeight: 800,
-          letterSpacing: -1,
-          fontFamily: '"Inter", "Space Grotesk", system-ui',
-          border: "2px solid rgba(100, 255, 218, 0.2)",
+          letterSpacing: 0,
+          fontFamily: '"JetBrains Mono", monospace',
+          border: "2px solid rgba(51, 255, 102, 0.35)",
         }}
       >
-        AB
+        ~/$
       </div>
     ),
     {
