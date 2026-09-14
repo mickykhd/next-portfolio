@@ -30,9 +30,9 @@ export type Rng = () => number;
 
 export const COLS = 20;
 export const ROWS = 20;
-export const BASE_TICK_MS = 140;
-export const MIN_TICK_MS = 70;
-export const TICK_STEP_MS = 2;
+export const BASE_TICK_MS = 165;
+export const MIN_TICK_MS = 95;
+export const TICK_STEP_MS = 1;
 export const POINTS_PER_FOOD = 10;
 /** Max buffered turns. 3 covers fast double/triple turns within one tick. */
 export const QUEUE_MAX = 3;

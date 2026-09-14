@@ -11,6 +11,7 @@ const {
   POINTS_PER_FOOD,
   BASE_TICK_MS,
   MIN_TICK_MS,
+  TICK_STEP_MS,
 } = require("./engine.js");
 
 let passed = 0;
@@ -152,9 +153,11 @@ console.log("[7] quick double-turn near wall executes BOTH turns");
 console.log("[8] speed ramp");
 {
   ok(tickMs(0) === BASE_TICK_MS, "base speed at 0 foods");
-  ok(tickMs(10) === BASE_TICK_MS - 20, "ramps down linearly");
-  ok(tickMs(1000) === MIN_TICK_MS, "floors at minimum");
-  ok(tickMs(35) === MIN_TICK_MS, "floor kicks in exactly at 35 foods");
+  ok(tickMs(10) === BASE_TICK_MS - 10 * TICK_STEP_MS, "ramps down linearly");
+  ok(tickMs(10000) === MIN_TICK_MS, "floors at minimum");
+  const floorAt = (BASE_TICK_MS - MIN_TICK_MS) / TICK_STEP_MS;
+  ok(tickMs(floorAt) === MIN_TICK_MS, `floor kicks in exactly at ${floorAt} foods`);
+  ok(tickMs(floorAt - 1) === MIN_TICK_MS + TICK_STEP_MS, "one tick before floor is one step faster");
 }
 
 console.log("[9] food placement fuzz (200 spawns, seeded)");
