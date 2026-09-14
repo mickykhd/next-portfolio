@@ -52,6 +52,7 @@ function runCommand(raw: string): string[] {
         "  experience  - where he's been",
         "  contact     - how to reach him",
         "  date        - current date",
+        "  snake       - play snake in the arcade",
         "  clear       - wipe the terminal",
         "  sudo ...    - go ahead, try it",
       ];
@@ -101,6 +102,8 @@ function runCommand(raw: string): string[] {
       ];
     case "date":
       return [new Date().toString()];
+    case "snake":
+      return ["__SCROLL__:arcade"];
     case "clear":
       return ["__CLEAR__"];
     case "sudo":
@@ -143,6 +146,15 @@ export function Terminal() {
     const output = runCommand(raw);
     if (output.length === 1 && output[0] === "__CLEAR__") {
       setHistory([]);
+    } else if (output.length === 1 && output[0] === "__SCROLL__:arcade") {
+      setHistory((h) => [
+        ...h,
+        { command: raw, output: ["launching ./snake — scrolling you to the arcade…"] },
+      ]);
+      document
+        .getElementById("arcade")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.pushState(null, "", "#arcade");
     } else {
       setHistory((h) => [...h, { command: raw, output }]);
     }

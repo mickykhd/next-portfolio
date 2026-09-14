@@ -34,6 +34,7 @@ export function CommandPalette() {
       { label: "Go to About", hint: "section", action: () => scrollTo("about") },
       { label: "Go to Skills", hint: "section", action: () => scrollTo("skills") },
       { label: "Go to Playground (terminal)", hint: "section", action: () => scrollTo("playground") },
+      { label: "Play Snake", hint: "game", action: () => scrollTo("arcade") },
       { label: "Go to AI Stack", hint: "section", action: () => scrollTo("ai-workflow") },
       { label: "Go to Projects", hint: "section", action: () => scrollTo("projects") },
       { label: "Go to Experience", hint: "section", action: () => scrollTo("experience") },

@@ -1330,6 +1330,150 @@ p { color: var(--text-muted); }
   caret-color: var(--green);
 }
 
+/* ---------- arcade / snake ---------- */
+
+.arcade-wrap {
+  max-width: 480px;
+}
+
+.arcade-screen {
+  border-radius: 0;
+  background: rgba(5, 8, 7, 0.92);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.arcade-screen:hover,
+.arcade-screen:focus-within {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 24px rgba(51, 255, 102, 0.12);
+}
+
+.arcade-hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-1);
+}
+
+.arcade-hud strong {
+  color: var(--green);
+  font-weight: 700;
+  margin-left: 0.35rem;
+}
+
+.arcade-stage {
+  position: relative;
+}
+
+.arcade-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.arcade-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  background: rgba(5, 8, 7, 0.82);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  text-align: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.25s ease;
+}
+
+.arcade-overlay-title {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--green);
+  text-shadow: 0 0 18px rgba(51, 255, 102, 0.5);
+}
+
+.arcade-overlay-title::before {
+  content: "$ ";
+  color: var(--text-muted);
+}
+
+.arcade-overlay-sub {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.arcade-dpad {
+  display: none;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(2, 48px);
+  gap: 8px;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.arcade-dpad button {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--green);
+  background: rgba(51, 255, 102, 0.05);
+  border: 1px solid var(--border-hover);
+  border-radius: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background 0.15s ease;
+}
+
+.arcade-dpad button:active {
+  background: var(--green-faint);
+}
+
+.arcade-dpad span {
+  display: block;
+}
+
+.arcade-hint {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+.arcade-hint::before {
+  content: "# ";
+  color: var(--green-dim);
+}
+
+@media (max-width: 768px) {
+  .arcade-dpad {
+    display: grid;
+  }
+  .arcade-wrap {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcade-overlay {
+    animation: none;
+  }
+}
+
 /* ---------- custom cursor ---------- */
 
 .cursor-dot,

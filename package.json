@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:snake": "rm -rf /tmp/snake-test-dist && tsc app/components/snake/engine.ts --outDir /tmp/snake-test-dist --module commonjs --target es2019 --skipLibCheck && cp scripts/snake-test/*.test.js /tmp/snake-test-dist/ && node /tmp/snake-test-dist/engine.test.js && node /tmp/snake-test-dist/sim.test.js"
   },
   "dependencies": {
     "next": "16.1.6",

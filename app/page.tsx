@@ -12,6 +12,7 @@ import { CopyEmail } from "@/app/components/CopyEmail";
 import { JsonResume } from "@/app/components/JsonResume";
 import { Magnetic } from "@/app/components/Magnetic";
 import { ScrambleText } from "@/app/components/ScrambleText";
+import { SnakeGame } from "@/app/components/SnakeGame";
 
 export default function Home() {
   const {
@@ -30,10 +31,11 @@ export default function Home() {
     { label: "about", href: "#about", index: "01" },
     { label: "skills", href: "#skills", index: "02" },
     { label: "playground", href: "#playground", index: "03" },
-    { label: "ai_stack", href: "#ai-workflow", index: "04" },
-    { label: "projects", href: "#projects", index: "05" },
-    { label: "experience", href: "#experience", index: "06" },
-    { label: "contact", href: "#contact", index: "07" },
+    { label: "arcade", href: "#arcade", index: "04" },
+    { label: "ai_stack", href: "#ai-workflow", index: "05" },
+    { label: "projects", href: "#projects", index: "06" },
+    { label: "experience", href: "#experience", index: "07" },
+    { label: "contact", href: "#contact", index: "08" },
   ];
 
   return (
@@ -104,6 +106,22 @@ export default function Home() {
         </ScrollReveal>
 
         <ScrollReveal>
+          <section className="section" id="arcade">
+            <div className="section-header">
+              <span className="section-number">04</span>
+              <h2 className="section-title"><ScrambleText text="./snake --play" trigger="hover" /></h2>
+              <div className="section-line" />
+            </div>
+            <p className="ai-workflow-intro">
+              Every terminal needs a snake. Eat, grow, don&apos;t die —
+              speed ramps up every 10 points. Or just type <code>snake</code> in
+              the playground above.
+            </p>
+            <SnakeGame />
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
           <section className="section" id="skills">
             <div className="section-header">
               <span className="section-number">02</span>
@@ -139,7 +157,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="ai-workflow">
             <div className="section-header">
-              <span className="section-number">04</span>
+              <span className="section-number">05</span>
               <h2 className="section-title"><ScrambleText text="cat ai_stack.md" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
@@ -161,7 +179,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="projects">
             <div className="section-header">
-              <span className="section-number">05</span>
+              <span className="section-number">06</span>
               <h2 className="section-title"><ScrambleText text="git log --projects" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
@@ -202,7 +220,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="experience">
             <div className="section-header">
-              <span className="section-number">06</span>
+              <span className="section-number">07</span>
               <h2 className="section-title"><ScrambleText text="git log --career" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
@@ -232,7 +250,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section" id="education">
             <div className="section-header">
-              <span className="section-number">07</span>
+              <span className="section-number">08</span>
               <h2 className="section-title"><ScrambleText text="cat education.log" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
@@ -256,7 +274,7 @@ export default function Home() {
         <ScrollReveal>
           <section className="section contact-section" id="contact">
             <div className="section-header" style={{ justifyContent: "center" }}>
-              <span className="section-number">08</span>
+              <span className="section-number">09</span>
               <h2 className="section-title"><ScrambleText text="ping --me" trigger="hover" /></h2>
               <div className="section-line" />
             </div>
