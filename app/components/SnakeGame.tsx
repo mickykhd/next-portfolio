@@ -186,9 +186,9 @@ export function SnakeGame() {
     const bctx = bg.getContext("2d");
     if (bctx) {
       bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      bctx.fillStyle = "#050807";
+      bctx.fillStyle = "#000000";
       bctx.fillRect(0, 0, BOARD_PX, BOARD_PX);
-      bctx.strokeStyle = "rgba(51, 255, 102, 0.05)";
+      bctx.strokeStyle = "rgba(255, 176, 0, 0.05)";
       bctx.lineWidth = 1;
       for (let i = 1; i < COLS; i++) {
         bctx.beginPath();
@@ -252,9 +252,9 @@ export function SnakeGame() {
       const fy = g.food.y * CELL;
       const pad = 4 + (staticRef.current ? 0 : (1 - pulse) * 2);
       ctx.save();
-      ctx.shadowColor = "rgba(255, 182, 66, 0.9)";
+      ctx.shadowColor = "rgba(255, 107, 53, 0.9)";
       ctx.shadowBlur = 12 * pulse;
-      ctx.fillStyle = "#ffb642";
+      ctx.fillStyle = "#ff6b35";
       ctx.fillRect(fx + pad, fy + pad, CELL - pad * 2, CELL - pad * 2);
       ctx.restore();
 
@@ -265,13 +265,13 @@ export function SnakeGame() {
         const fade = 1 - (i / Math.max(n, 1)) * 0.65;
         if (i === 0) {
           ctx.save();
-          ctx.shadowColor = "rgba(51, 255, 102, 0.9)";
+          ctx.shadowColor = "rgba(255, 176, 0, 0.9)";
           ctx.shadowBlur = 10;
-          ctx.fillStyle = "#b6ffcf";
+          ctx.fillStyle = "#ffe7bd";
           ctx.fillRect(seg.x * CELL + 1, seg.y * CELL + 1, CELL - 2, CELL - 2);
           ctx.restore();
           // eyes oriented by direction
-          ctx.fillStyle = "#050807";
+          ctx.fillStyle = "#000000";
           const cx = seg.x * CELL + CELL / 2;
           const cy = seg.y * CELL + CELL / 2;
           const o = 5;
@@ -285,7 +285,7 @@ export function SnakeGame() {
           ctx.arc(cx + px + ex, cy + py + ey, 2.2, 0, Math.PI * 2);
           ctx.fill();
         } else {
-          ctx.fillStyle = `rgba(51, 255, 102, ${0.25 + fade * 0.55})`;
+          ctx.fillStyle = `rgba(255, 176, 0, ${0.25 + fade * 0.55})`;
           ctx.fillRect(seg.x * CELL + 2, seg.y * CELL + 2, CELL - 4, CELL - 4);
         }
       }

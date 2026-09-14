@@ -42,7 +42,7 @@ export function CursorGlow() {
 
       dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
       ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%) scale(${hovering ? 1.8 : 1})`;
-      ring.style.borderColor = hovering ? "rgba(51, 255, 102, 0.6)" : "rgba(51, 255, 102, 0.25)";
+      ring.style.borderColor = hovering ? "rgba(255, 176, 0, 0.6)" : "rgba(255, 176, 0, 0.25)";
 
       frame = requestAnimationFrame(loop);
     };

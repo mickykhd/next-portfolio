@@ -109,15 +109,15 @@ export function ParticleBackground() {
 
           if (j === 0) {
             // head: bright with glow, extra bright near mouse
-            ctx.shadowColor = "rgba(51, 255, 102, 0.9)";
+            ctx.shadowColor = "rgba(255, 176, 0, 0.9)";
             ctx.shadowBlur = mouseNear ? 16 : 8;
-            ctx.fillStyle = mouseNear ? "#b6ffcf" : "#9dffb4";
+            ctx.fillStyle = mouseNear ? "#ffe9c4" : "#ffd97a";
           } else {
             const fade = 1 - j / d.chars.length;
             ctx.shadowBlur = 0;
             ctx.fillStyle = mouseNear
-              ? `rgba(51, 255, 102, ${0.28 + fade * 0.35})`
-              : `rgba(51, 255, 102, ${0.05 + fade * 0.16})`;
+              ? `rgba(255, 176, 0, ${0.28 + fade * 0.35})`
+              : `rgba(255, 176, 0, ${0.05 + fade * 0.16})`;
           }
           ctx.fillText(d.chars[j], d.x, cy);
         }

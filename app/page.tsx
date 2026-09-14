@@ -69,7 +69,7 @@ export default function Home() {
           ctaButtons={
             <>
               <Magnetic>
-                <a href="#contact" className="btn-primary">
+                <a href="#contact" className="btn-primary btn-compact">
                   Get In Touch
                 </a>
               </Magnetic>

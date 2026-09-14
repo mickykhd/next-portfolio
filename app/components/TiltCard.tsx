@@ -30,7 +30,7 @@ export function TiltCard({ children, className = "" }: TiltCardProps) {
       const glareX = (x / rect.width) * 100;
       const glareY = (y / rect.height) * 100;
       glareRef.current.style.background =
-        `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(51, 255, 102, 0.12) 0%, transparent 60%)`;
+        `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 176, 0, 0.12) 0%, transparent 60%)`;
     }
   };
 

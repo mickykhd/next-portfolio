@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import { profile, siteConfig } from "@/data/profile";
 import { ParticleBackground } from "@/app/components/ParticleBackground";
@@ -12,6 +12,10 @@ const jetBrains = JetBrains_Mono({
 });
 
 const ogImage = "/og-image.svg";
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
